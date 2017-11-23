@@ -1,13 +1,14 @@
-package com.hucet.cache
+package com.hucet.cache.source
 
+import com.hucet.cache.signature.Key
 import java.util.LinkedHashMap
 
 /**
  * Created by taesu on 2017-11-23.
  */
-class LRUCache<K, V>(initialCapacity: Int,
-                     loadFactor: Float,
-                     private val maxEntries: Int) : LinkedHashMap<K, V>(initialCapacity, loadFactor, true) {
+class LRUCache<K : Key, V>(initialCapacity: Int,
+                           loadFactor: Float,
+                           private val maxEntries: Int) : LinkedHashMap<K, V>(initialCapacity, loadFactor, true) {
 
     constructor(initialCapacity: Int,
                 maxEntries: Int) : this(initialCapacity, DEFAULT_LOAD_FACTOR, maxEntries) {

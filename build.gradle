@@ -36,6 +36,8 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.3"
+    compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: '0.19.3'
 
     testCompile('org.jetbrains.spek:spek-api:1.1.5') {
         exclude group: 'org.jetbrains.kotlin'
@@ -44,11 +46,16 @@ dependencies {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxkotlin
+    compile group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.1.0'
+
     // https://mvnrepository.com/artifact/org.jetbrains.spek/spek-subject-extension
     testRuntime group: 'org.jetbrains.spek', name: 'spek-subject-extension', version: '1.1.5'
 
     testCompile 'org.amshove.kluent:kluent:1.30'
     testCompile 'org.junit.platform:junit-platform-runner:1.0.0'
+    testCompile "com.nhaarman:mockito-kotlin:1.5.0"
+    testCompile "org.mockito:mockito-inline:2.12.0"
 }
 
 compileKotlin {
@@ -56,4 +63,9 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
