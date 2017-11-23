@@ -23,6 +23,12 @@ class LRUCacheDataSourceTest : SubjectSpek<LRUCacheDataSource<String>>({
 
     val lruCache by memoized { LRUCache<Key, String>(3) }
 
+    val testData = listOf(
+            "abc",
+            "def",
+            "eea",
+            "qqw"
+    )
     given("LRUCacheDataSource")
     {
         subject {
@@ -30,20 +36,22 @@ class LRUCacheDataSourceTest : SubjectSpek<LRUCacheDataSource<String>>({
         }
         on("send [abc]")
         {
-            val testData = "abc"
             val testSubscriber = subject
                     .getOnFlowable(testData)
                     .subscribeOn(testSchedulerProvider.io())
                     .test()
 
-            testScheduler.advanceTimeBy(10, TimeUnit.SECONDS)
+
+            testScheduler.advanceTimeBy(1, TimeUnit.SECONDS)
 
             it("receiver [abc] 이어야 함")
             {
                 testSubscriber?.run {
                     assertComplete()
                     assertNoErrors()
-                    assertValue("abc")
+                    assertValue {
+                        testData == it
+                    }
                 }
             }
         }
